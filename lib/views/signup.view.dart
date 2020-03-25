@@ -72,10 +72,10 @@ class Signup extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
+                        controller.createUser(model).then((data) {
+                          store.setUser(data);
+                        });
                       }
-                      controller.createUser(model).then((data) {
-                        store.setUser(data);
-                      });
                     },
                   )
                 ],
