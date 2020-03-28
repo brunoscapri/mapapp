@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mapapp/controllers/account.controller.dart';
 import 'package:mapapp/stores/account.store.dart';
 import 'package:mapapp/view-model/user.viewmodel.dart';
@@ -17,6 +19,9 @@ class Signup extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
             Form(
               key: _formKey,
               child: Column(
@@ -68,6 +73,13 @@ class Signup extends StatelessWidget {
                     height: 20,
                   ),
                   FlatButton(
+                    child: Text("Pick picture"),
+                    onPressed: () {
+                      getImageFromGalery(store);
+                    },
+                  ),
+                  //Observer(builder: (_) => Image.file(store.image)),
+                  FlatButton(
                     child: Text("Signup"),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
@@ -85,5 +97,10 @@ class Signup extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future getImageFromGalery(AccountStore store) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    await store.setImage(image);
   }
 }

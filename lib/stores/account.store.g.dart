@@ -26,6 +26,23 @@ mixin _$AccountStore on _AccountStore, Store {
     }, _$userAtom, name: '${_$userAtom.name}_set');
   }
 
+  final _$imageAtom = Atom(name: '_AccountStore.image');
+
+  @override
+  File get image {
+    _$imageAtom.context.enforceReadPolicy(_$imageAtom);
+    _$imageAtom.reportObserved();
+    return super.image;
+  }
+
+  @override
+  set image(File value) {
+    _$imageAtom.context.conditionallyRunInAction(() {
+      super.image = value;
+      _$imageAtom.reportChanged();
+    }, _$imageAtom, name: '${_$imageAtom.name}_set');
+  }
+
   final _$_AccountStoreActionController =
       ActionController(name: '_AccountStore');
 
@@ -40,8 +57,18 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
+  dynamic setImage(File img) {
+    final _$actionInfo = _$_AccountStoreActionController.startAction();
+    try {
+      return super.setImage(img);
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
-    final string = 'user: ${user.toString()}';
+    final string = 'user: ${user.toString()},image: ${image.toString()}';
     return '{$string}';
   }
 }
