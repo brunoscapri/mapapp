@@ -67,6 +67,16 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
+  dynamic teste() {
+    final _$actionInfo = _$_AccountStoreActionController.startAction();
+    try {
+      return super.teste();
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'user: ${user.toString()},image: ${image.toString()}';
     return '{$string}';

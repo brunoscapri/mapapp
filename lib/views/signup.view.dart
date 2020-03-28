@@ -72,13 +72,24 @@ class Signup extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
+                  Observer(builder: (_) {
+                    if (store.image != null) {
+                      model.picture = store.image;
+                      return Image.file(store.image);
+                    }
+                    return SizedBox(
+                      height: 2,
+                    );
+                  }),
+                  SizedBox(
+                    height: 10,
+                  ),
                   FlatButton(
                     child: Text("Pick picture"),
                     onPressed: () {
                       getImageFromGalery(store);
                     },
                   ),
-                  //Observer(builder: (_) => Image.file(store.image)),
                   FlatButton(
                     child: Text("Signup"),
                     onPressed: () {
@@ -102,5 +113,6 @@ class Signup extends StatelessWidget {
   Future getImageFromGalery(AccountStore store) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     await store.setImage(image);
+    store.teste();
   }
 }

@@ -12,7 +12,7 @@ abstract class _AccountStore with Store {
   UserModel user = new UserModel();
 
   @observable
-  File image;
+  File image = new File('');
 
   @action
   setUser(UserModel um) {
@@ -22,5 +22,10 @@ abstract class _AccountStore with Store {
   @action
   setImage(File img) {
     this.image = img;
+  }
+
+  @action
+  teste() {
+    print(this.image);
   }
 }

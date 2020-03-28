@@ -1,16 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:mapapp/models/user.model.dart';
 import 'package:mapapp/view-model/user.viewmodel.dart';
+import '../models/user.model.dart';
+import '../settings.dart';
 
 class AccountRepository {
+  Dio dio = new Dio();
+
   Future<UserModel> createAccount(UserModelView model) async {
-    await Future.delayed(Duration(milliseconds: 1500)); //api fake
-    return new UserModel(
-      id: "123",
-      name: model.user,
-      email: model.email,
-      picture: "https://picsum.photos/200/200",
-      role: "student",
-      token: "abobora",
-    );
+    dio.options.headers['content-Type'] = 'application/json';
+
+    var url = "${Settings.apiUrl}user";
+
+    try {
+      Response res = await dio.post(url, data: {
+        "name": model.user,
+        "email": model.email,
+        "password": model.password
+      });
+      return UserModel.fromJson(res.data);
+    } catch (e) {
+      print(e);
+    }
   }
 }
